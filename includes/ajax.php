@@ -576,7 +576,16 @@ if (!function_exists('tsml_ajax_meetings')) {
 		}
 
 		if (!headers_sent()) header('Access-Control-Allow-Origin: *');
-		wp_send_json(tsml_get_meetings($input));
+		//wp_send_json(tsml_get_meetings($input));
+
+		$included_meetings = array();
+		$meetings = tsml_get_meetings($input);
+		foreach ($meetings as $meeting) {
+			if (empty($meeting['exclude_from_feeds'])) {
+				$included_meetings[] = $meeting;
+			}
+		}
+                wp_send_json($included_meetings);
 	}
 }
 
