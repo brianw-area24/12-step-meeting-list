@@ -199,6 +199,7 @@ if (!function_exists('tsml_ajax_csv')) {
 			'contact_3_phone' =>	'Contact 3 Phone',
 			'last_contact' => 		'Last Contact',
 			'author' => 			'Author',
+			'exclude_from_feeds' =>		'Exclude From Feeds',
 			'slug' => 				'Slug',
 			'updated' =>			'Updated',
 		);
@@ -502,6 +503,10 @@ if (!function_exists('function_name')) {
 			
 			if (!empty($meeting['phone'])) {
 				update_post_meta($contact_entity_id, 'phone', $meeting['phone']);
+			}
+
+			if (!empty($meeting['exclude_from_feeds'])) {
+				update_post_meta($contact_entity_id, 'exclude_from_feeds', $meeting['exclude_from_feeds']);
 			}
 			
 			if (!empty($meeting['last_contact']) && ($last_contact = strtotime($meeting['last_contact']))) {
