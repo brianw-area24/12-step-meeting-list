@@ -576,8 +576,8 @@ if (!function_exists('tsml_ajax_meetings')) {
 		}
 
 		if (!headers_sent()) header('Access-Control-Allow-Origin: *');
-		//wp_send_json(tsml_get_meetings($input));
 
+		// Step through all meetings and check if they should be excluded from the feed
 		$included_meetings = array();
 		$meetings = tsml_get_meetings($input);
 		foreach ($meetings as $meeting) {
@@ -585,6 +585,7 @@ if (!function_exists('tsml_ajax_meetings')) {
 				$included_meetings[] = $meeting;
 			}
 		}
+
                 wp_send_json($included_meetings);
 	}
 }
