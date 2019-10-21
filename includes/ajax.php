@@ -586,7 +586,20 @@ if (!function_exists('tsml_ajax_meetings')) {
 		$included_meetings = array();
 		$meetings = tsml_get_meetings($input);
 		foreach ($meetings as $meeting) {
-			if (empty($meeting['exclude_from_feeds'])) {
+			$include_meeting = true;
+
+			// Check if meeting is excluded
+			if (!empty($meeting['exclude_from_feeds'])) {
+				$include_meeting = false;
+			}
+
+			// Check if we're only sending a single region
+			if (!empty($input['region']) && $meeting['region'] !== $input['region']) {
+				$include_meeting = false;
+			}
+
+			// Add meetings if they are still included
+			if ($include_meeting) {
 				$included_meetings[] = $meeting;
 			}
 		}
