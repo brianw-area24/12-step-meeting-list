@@ -82,6 +82,17 @@ function tsml_save_post($post_id, $post, $update) {
 		}
 	}
 
+	// exclude_from_feeds is a checkbox
+	if (!$update || empty($_POST['exclude_from_feeds']) !== empty($old_meeting->exclude_from_feeds)) {
+		$changes[] = 'exclude_from_feeds';
+		if (empty($_POST['exclude_from_feeds'])) {
+			delete_post_meta($post->ID, 'exclude_from_feeds');
+		} else {
+			update_post_meta($post->ID, 'exclude_from_feeds', $_POST['exclude_from_feeds']);
+		}
+	}
+
+
 	//day could be null for appointment meeting
 	if (in_array($_POST['day'], array('0', '1', '2', '3', '4', '5', '6'))) {
 		if (!$update || !isset($old_meeting->day) || $old_meeting->day != intval($_POST['day'])) {

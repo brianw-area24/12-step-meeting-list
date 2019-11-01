@@ -199,6 +199,7 @@ if (!function_exists('tsml_ajax_csv')) {
 			'contact_3_phone' =>	'Contact 3 Phone',
 			'last_contact' => 		'Last Contact',
 			'author' => 			'Author',
+			'exclude_from_feeds' =>		'Exclude From Feeds',
 			'slug' => 				'Slug',
 			'updated' =>			'Updated',
 		);
@@ -503,6 +504,10 @@ if (!function_exists('function_name')) {
 			if (!empty($meeting['phone'])) {
 				update_post_meta($contact_entity_id, 'phone', $meeting['phone']);
 			}
+
+			if (!empty($meeting['exclude_from_feeds'])) {
+				update_post_meta($contact_entity_id, 'exclude_from_feeds', $meeting['exclude_from_feeds']);
+			}
 			
 			if (!empty($meeting['last_contact']) && ($last_contact = strtotime($meeting['last_contact']))) {
 				update_post_meta($contact_entity_id, 'last_contact', date('Y-m-d', $last_contact));
@@ -576,7 +581,30 @@ if (!function_exists('tsml_ajax_meetings')) {
 		}
 
 		if (!headers_sent()) header('Access-Control-Allow-Origin: *');
-		wp_send_json(tsml_get_meetings($input));
+
+		// Step through all meetings and check if they should be excluded from the feed
+		$included_meetings = array();
+		$meetings = tsml_get_meetings($input);
+		foreach ($meetings as $meeting) {
+			$include_meeting = true;
+
+			// Check if meeting is excluded
+			if (!empty($meeting['exclude_from_feeds'])) {
+				$include_meeting = false;
+			}
+
+			// Check if we're only sending a single region
+			if (!empty($input['region']) && $meeting['region'] !== $input['region']) {
+				$include_meeting = false;
+			}
+
+			// Add meetings if they are still included
+			if ($include_meeting) {
+				$included_meetings[] = $meeting;
+			}
+		}
+
+                wp_send_json($included_meetings);
 	}
 }
 

@@ -83,6 +83,14 @@ foreach ($tsml_programs[$tsml_program]['types'] as $key => $type) {?>
 			<label for="content"><?php _e('Notes', '12-step-meeting-list')?></label>
 			<textarea name="content" id="content" placeholder="<?php _e('eg. Birthday speaker meeting last Saturday of the month', '12-step-meeting-list')?>"><?php echo $meeting->post_content ?></textarea>
 		</div>
+
+		<div class="meta_form_row">
+			<label>&nbsp;</label>
+			<div class="checkboxes">
+				<label><input type="checkbox" name="exclude_from_feeds" value="1" <?php if (!empty($meeting->exclude_from_feeds)) echo ' checked' ?>>Exclude from Feeds</label>
+			</div>
+		</div>
+
 		<?php
 }
 

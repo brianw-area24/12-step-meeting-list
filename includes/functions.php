@@ -900,12 +900,13 @@ function tsml_get_meetings($arguments=array(), $from_cache=true) {
 				'slug'				=> $post->post_name,
 				'notes'				=> $post->post_content,
 				'updated'			=> $post->post_modified_gmt,
-				'location_id'		=> $post->post_parent,
+				'location_id'			=> $post->post_parent,
 				'url'				=> get_permalink($post->ID),
 				'day'				=> @$meeting_meta[$post->ID]['day'],
 				'time'				=> @$meeting_meta[$post->ID]['time'],
 				'end_time'			=> @$meeting_meta[$post->ID]['end_time'],
-				'time_formatted'	=> tsml_format_time(@$meeting_meta[$post->ID]['time']),
+				'time_formatted'		=> tsml_format_time(@$meeting_meta[$post->ID]['time']),
+				'exclude_from_feeds'		=> @$meeting_meta[$post->ID]['exclude_from_feeds'],
 				'email'				=> @$meeting_meta[$post->ID]['email'],
 				'website'			=> @$meeting_meta[$post->ID]['website'],
 				'website_2'			=> @$meeting_meta[$post->ID]['website_2'],
@@ -945,7 +946,7 @@ function tsml_get_meta($type, $id=null) {
 	$keys = array(
 		'tsml_group' => '"website", "website_2", "email", "phone", "venmo", "last_contact"' . (current_user_can('edit_posts') ? ', "contact_1_name", "contact_1_email", "contact_1_phone", "contact_2_name", "contact_2_email", "contact_2_phone", "contact_3_name", "contact_3_email", "contact_3_phone"' : ''),
 		'tsml_location' => '"formatted_address", "latitude", "longitude"',
-		'tsml_meeting' => '"day", "time", "end_time", "types", "group_id", "website", "website_2", "email", "phone", "last_contact"' . (current_user_can('edit_posts') ? ', "contact_1_name", "contact_1_email", "contact_1_phone", "contact_2_name", "contact_2_email", "contact_2_phone", "contact_3_name", "contact_3_email", "contact_3_phone"' : ''),
+		'tsml_meeting' => '"day", "time", "end_time", "types", "exclude_from_feeds", "group_id", "website", "website_2", "email", "phone", "last_contact"' . (current_user_can('edit_posts') ? ', "contact_1_name", "contact_1_email", "contact_1_phone", "contact_2_name", "contact_2_email", "contact_2_phone", "contact_3_name", "contact_3_email", "contact_3_phone"' : ''),
 	);
 	if (!array_key_exists($type, $keys)) return trigger_error('tsml_get_meta for unexpected type ' . $type);
 	$meta = array();
