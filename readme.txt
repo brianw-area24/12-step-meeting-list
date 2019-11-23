@@ -1,8 +1,8 @@
 === 12 Step Meeting List ===
 Contributors: aasanjose
 Requires at least: 3.2
-Tested up to: 5.1
-Stable tag: 3.4.20
+Tested up to: 5.3
+Stable tag: 3.4.21
 
 This plugin helps twelve step recovery programs list their meetings. It standardizes addresses, and displays results in a searchable list and map.
 
@@ -322,7 +322,7 @@ Add this to your theme's functions.php. Feel free to change the order or column 
 = Can I change the default sort order on the meeting list page? =
 By default, the plugin sorts by day, then time, then location name. To set your own sort index, add this to your functions.php:
 
-	$tsml_sort_order = 'region'; //options are name, location, address, time, or region
+	$tsml_sort_by = 'region'; //options are name, location, address, time, or region
 
 = How can I override the meeting list or detail pages? =
 Copy the files from the plugin's templates directory into your theme's root directory. If you're using a theme from the Theme Directory, you may be better off creating a [Child Theme](https://codex.wordpress.org/Child_Themes). Now, you may override those pages. The archive-meetings.php file controls the meeting list page, single-meetings.php controls the meetings detail, and single-locations.php controls the location detail.
@@ -395,7 +395,7 @@ Sure. Try adding this code to your theme's functions.php:
 
 	add_action('pre_get_posts', 'tsml_front_page');
 	
-Also check out our [One Page Meeting List](https://github.com/meeting-guide/one-page-meeting-list) theme.
+Also check out our [One Page Meeting List](https://github.com/code4recovery/one-page-meeting-list) theme.
 	
 = Can I use this plugin to list telephone meetings or other meetings without a fixed location? =
 No, there's not a good way to do this at this time. All meetings currently need to have a geographic location.
@@ -419,6 +419,11 @@ To apply these changes, you must go to Settings > Permalinks and click "Save Cha
 1. Edit location
 
 == Changelog ==
+
+= 3.4.21 =
+* Updating how PDF displays groups (hmbrecords)
+* Updating documentation regarding JSON feeds (brianw)
+* Updating bug and feature request processes
 
 = 3.4.20 =
 * Restoring PHP 5.3 compatibility
