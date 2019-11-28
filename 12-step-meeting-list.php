@@ -37,6 +37,7 @@ include TSML_PATH . '/includes/init.php';
 include TSML_PATH . '/includes/shortcodes.php';
 include TSML_PATH . '/includes/widgets.php';
 include TSML_PATH . '/includes/widgets_init.php';
+include TSML_PATH . '/includes/support_assistant.php';
 
 //include admin files
 if (is_admin()) {
@@ -51,3 +52,12 @@ if (is_admin()) {
 //these hooks need to be in this file
 register_activation_hook(__FILE__, 'tsml_change_activation_state');
 register_deactivation_hook(__FILE__, 'tsml_change_activation_state');
+
+//this filter enables the public support page
+add_filter( 'init', function( $template ) {
+    if ( isset( $_GET['tsml_support'] ) ) {
+        $tsml_support = $_GET['tsml_support'];
+        include plugin_dir_path( __FILE__ ) . 'templates/tsml_support.php';
+        die;
+    }
+} );
