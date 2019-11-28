@@ -426,6 +426,9 @@ $tsml_timestamp = microtime(true);
 //these are empty now because polylang might change the language. gets set in the plugins_loaded hook
 $tsml_days = $tsml_days_order = $tsml_programs = $tsml_types_in_use = $tsml_slug = null; $tsml_strings = null;
 
+//get the support assistant options
+$tsml_support_assistant = get_option('tsml_support_assistant', array());
+
 add_action('plugins_loaded', 'tsml_define_strings');
 
 function tsml_define_strings() {
