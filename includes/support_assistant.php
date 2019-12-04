@@ -14,11 +14,11 @@ function tsml_support_assistant() {
 		if ($_POST['tsml_support_assistant'] == 'public') {
 			$tsml_support_assistant['status'] = 'public';
 			$tsml_support_assistant['expires'] = time() + (7 * 24 * 60 * 60);
-			$tsml_support_assistant['key'] = md5(uniqid($name, true));
+			$tsml_support_assistant['key'] = md5(uniqid(time(), true));
 		} else {
 			$tsml_support_assistant['status'] = 'admin_only';
 			$tsml_support_assistant['expires'] = time();
-			$tsml_support_assistant['key'] = md5(uniqid($name, true));
+			$tsml_support_assistant['key'] = md5(uniqid(time(), true));
 		}
 
 		update_option('tsml_support_assistant', $tsml_support_assistant);
