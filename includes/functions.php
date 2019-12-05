@@ -1539,3 +1539,27 @@ function tsml_string_tokens($string) {
 	//return array
 	return array_values(array_unique(array_filter(explode(' ', $string))));
 }
+
+//function: determine whether support assistant is set to publi
+//used:		ajax templates/support_assistant
+function tsml_support_assistant_ispublic() {
+	global $tsml_support_assistant;
+
+	$input = empty($_POST) ? $_GET : $_POST;
+	$page_key = empty($input['key']) ? '' : $input['key'];
+	$now = time();
+
+	if ('public' == $tsml_support_assistant['status'] && $now <= $tsml_support_assistant['expires'] && $page_key == $tsml_support_assistant['key']) {
+		return true;
+	}
+
+	// See if time has expired for this session of public status
+	if ('public' == $tsml_support_assistant['status'] && $now > $tsml_support_assistant['expires']) {
+		$tsml_support_assistant['status'] = 'admin_only';
+		$tsml_support_assistant['expires'] = $now;
+		$tsml_support_assistant['key'] = md5(uniqid($now, true));
+		update_option('tsml_support_assistant', $tsml_support_assistant);
+	}
+
+	return false;
+}
