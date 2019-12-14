@@ -14,6 +14,8 @@ function tsml_support_assistant() {
 		if ($_POST['tsml_support_assistant'] == 'public') {
 			$tsml_support_assistant['status'] = 'public';
 			$tsml_support_assistant['expires'] = time() + (7 * 24 * 60 * 60);
+// Tmp
+$tsml_support_assistant['expires'] = time() + (600);
 			$tsml_support_assistant['key'] = md5(uniqid(time(), true));
 		} else {
 			$tsml_support_assistant['status'] = 'admin_only';
@@ -117,6 +119,9 @@ p {margin-bottom:-0px; padding:0}
 									?>
 								</section>
 							</details>
+<?php // Tmp ?>
+<p><?php echo 'Is Public: ' . var_export(tsml_support_assistant_ispublic(), true); ?></p>
+<p><?php echo 'Time: ' . time(); ?></p>
 <p><?php echo serialize($tsml_support_assistant); ?></p>
 						</div>
 					</div>
@@ -188,7 +193,6 @@ p {margin-bottom:-0px; padding:0}
 										'admin_only' => __('Admin Only', '12-step-meeting-list'),
 										'public' => __('Public', '12-step-meeting-list'),
 									) as $key => $value) {?>
-									<!--<option value="<?php echo $key?>"<?php selected($tsml_sharing, $key)?>><?php echo $value?></option>-->
 									<option value="<?php echo $key?>"<?php selected(empty($tsml_support_assistant['status']) ? 'admin_only' : $tsml_support_assistant['status'], $key)?>><?php echo $value?></option>
 								<?php }?>
 								</select>
@@ -197,7 +201,10 @@ p {margin-bottom:-0px; padding:0}
 									<ul class="ul-disc">
 										<li><?php printf('<a href="%s">%s</a>', admin_url('admin-ajax.php') . '?action=csv&key=' . $tsml_support_assistant['key'], __('Download CSV file', '12-step-meeting-list')); ?></li>
 										<li><?php printf('<a href="%s">%s</a>', admin_url('admin-ajax.php') . '?action=meetings&key=' . $tsml_support_assistant['key'], __('See Meetings Feed', '12-step-meeting-list')); ?></li>
+										<li><?php printf('<a href="%s">%s</a>', get_site_url() . '/?tsml_support=1&key=' . $tsml_support_assistant['key'], __('Public Support Page', '12-step-meeting-list')); ?></li>
 									</ul>
+
+									<?php //TODO: Add a button to email link to TSML support ?>
 								<?php } ?>
 							</form>
 
