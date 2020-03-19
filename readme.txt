@@ -1,8 +1,8 @@
 === 12 Step Meeting List ===
 Contributors: aasanjose
 Requires at least: 3.2
-Tested up to: 5.3
-Stable tag: 3.4.22
+Tested up to: 5.3.2
+Stable tag: 3.5.3
 
 This plugin helps twelve step recovery programs list their meetings. It standardizes addresses, and displays results in a searchable list and map.
 
@@ -203,6 +203,22 @@ To apply these changes, you must go to Settings > Permalinks and click "Save Cha
 1. Edit location
 
 == Changelog ==
+
+= 3.5.3 =
+* Changes to front end display supporting temporary closure tag
+
+= 3.5.2 =
+* Adding "Temporary Closure" meeting type to all programs
+
+= 3.5.1 =
+* Compatibility for PHP < 5.3
+* "Need help" button on Import & Settings page
+
+= 3.5.0 =
+* Added option for upcoming meetings widget to display message if no further meetings exist for today.
+* Added size to PDF generator.
+* Fixed bug with restoring meetings from trash.
+* Updated logo.
 
 = 3.4.22 =
 * Fixing bug in geocode caching (Ogden)

@@ -496,9 +496,7 @@ function tsml_geocode($address) {
 	$addresses	= get_option('tsml_addresses', array());
 
 	//filter out any empty addresses that got added due to a bug
-	$addresses = array_filter($addresses, function($address) {
-		return !empty($address['formatted_address']);
-	});	
+	$addresses = array_filter($addresses, 'tsml_has_address');	
 
 	//if key exists, return it
 	if (array_key_exists($address, $addresses)) {
@@ -1234,6 +1232,12 @@ function tsml_import_buffer_set($meetings, $data_source=null) {
 	update_option('tsml_import_buffer', $meetings, false);
 }
 
+//function: determine whether a geocoded address has a non-empty formatted address
+//used:		tsml_geocode();
+function tsml_has_address($address) {
+	return !empty($address['formatted_address']);
+}
+
 //function:	filter workaround for setting post_modified dates
 //used:		tsml_ajax_import()
 function tsml_import_post_modified($data, $postarr) {
@@ -1540,7 +1544,7 @@ function tsml_string_tokens($string) {
 	return array_values(array_unique(array_filter(explode(' ', $string))));
 }
 
-//function: determine whether support assistant is set to publi
+//function: determine whether support assistant is set to public
 //used:		ajax templates/support_assistant
 function tsml_support_assistant_ispublic() {
 	global $tsml_support_assistant;
@@ -1562,4 +1566,21 @@ function tsml_support_assistant_ispublic() {
 	}
 
 	return false;
+}
+
+/**
+ * Implodes given array $types into lower-cased class names, prefixing each with $prefix
+ *
+ * @param string[] $types
+ * @param string $prefix
+ * @return string
+ */
+function tsml_to_css_classes($types, $prefix = 'type-') {
+    if (!$types) {
+        return '';
+    }
+
+    $types = array_map('strtolower', $types);
+
+    return $prefix . implode(' ' . $prefix, $types);
 }
